@@ -1,4 +1,3 @@
-
 #![no_main]
 #![no_std]
 
@@ -12,7 +11,7 @@ use stm32f1xx_hal::prelude::*;
 
 static TOGGLE_LED: AtomicBool = AtomicBool::new(false);
 
-pub mod smoke;
+use smokie::access;
 
 #[entry]
 fn main() -> ! {
@@ -36,20 +35,19 @@ fn main() -> ! {
 
     let i2c_pins = (
         gpiob.pb10.into_alternate_open_drain(&mut gpiob.crh), //SCL2
-            gpiob.pb11.into_alternate_open_drain(&mut gpiob.crh), //SDA2
-
-        );
+        gpiob.pb11.into_alternate_open_drain(&mut gpiob.crh), //SDA2
+    );
 
     let i2c_mode = stm32f1xx_hal::i2c::Mode::Standard {
-        frequency: stm32f1xx_hal::time::Hertz(100000)
+        frequency: stm32f1xx_hal::time::Hertz(100000),
     };
 
-    let mut i2c_bus = stm32f1xx_hal::i2c::BlockingI2c::i2c2 (
+    let mut i2c_bus = stm32f1xx_hal::i2c::BlockingI2c::i2c2(
         device.I2C2,
         i2c_pins,
         i2c_mode,
         clocks,
-        & mut rcc.apb1,
+        &mut rcc.apb1,
         //timeouts
         100,
         100,
@@ -57,10 +55,7 @@ fn main() -> ! {
         100,
     );
 
-//    smoke::read_id(i2c_bus);
-
-    let mut x: [u8;1] = [0];
-    let _id = i2c_bus.read(0x01,&mut x).unwrap();
+    let _id = access::device_id(&mut i2c_bus).unwrap();
 
     // configure SysTick to generate an exception every second
     core.SYST.set_clock_source(SystClkSource::Core);
