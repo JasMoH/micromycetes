@@ -33,6 +33,12 @@ fn main() -> ! {
     //configure i2c
     let mut gpiob = device.GPIOB.split(&mut rcc.apb2); //acquire gpiob
 
+    //set up a couple of weak pullup pins for the i2c bus
+    //I just connected these to scl and sda to work as pullups
+    gpiob.pb1.into_pull_up_input(&mut gpiob.crl);
+    gpiob.pb0.into_pull_up_input(&mut gpiob.crl);
+
+    //todo: why can't I enable internal pullp in af mode?
     let i2c_pins = (
         gpiob.pb10.into_alternate_open_drain(&mut gpiob.crh), //SCL2
         gpiob.pb11.into_alternate_open_drain(&mut gpiob.crh), //SDA2
@@ -50,12 +56,10 @@ fn main() -> ! {
         &mut rcc.apb1,
         //timeouts
         100,
-        100,
+        10,
         100,
         100,
     );
-
-    let _id = access::device_id(&mut i2c_bus).unwrap();
 
     // configure SysTick to generate an exception every second
     core.SYST.set_clock_source(SystClkSource::Core);
@@ -66,8 +70,10 @@ fn main() -> ! {
     loop {
         // sleep
         cortex_m::asm::wfi();
-        if TOGGLE_LED.swap(false, Ordering::AcqRel) {
+
+        if access::check_id(&mut i2c_bus) {
             led.toggle().unwrap();
+            //this will blink if it can read the address correctly
         }
     }
 }

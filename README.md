@@ -5,11 +5,22 @@ in to some more detailed projects in time, but is most likely abandonware.
 some things I'm interested in exploring with this:
 * familiarity with the hal crates
 * developing for multiple architectures
-* 
+
+# observations and next steps
+I can't seem to get the internal pullups to enable when pb11/10 are set to alternate function. look in to this,
+maybe submit patch if that's not my fault?
+
+STM's good ol' `const ADDRESS: u8 = 0xC8 >> 1;` convention for 8 bit addresses rears its head again...
+
 # helpful projects 'n resources
+## embedded stuff
 * [bluepill quickstart](https://github.com/TeXitoi/blue-pill-quickstart)
 * [the embeddonomicon](https://docs.rust-embedded.org/book/intro/index.html)
 * [usage axamples for bluepill hal](https://github.com/stm32-rs/stm32f1xx-hal/tree/v0.7.0/examples)
+
+## rust general
+* [mdbook for documentation](https://rust-lang.github.io/mdBook/)
+* [rust desgin patterns](https://rust-unofficial.github.io/patterns/)
 
 ## notes on setting up i2c read
 [embedded hal i2c documentation](https://docs.rs/embedded-hal/0.2.6/embedded_hal/blocking/i2c/index.html)
