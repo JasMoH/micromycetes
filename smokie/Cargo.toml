@@ -7,3 +7,8 @@ edition = "2018"
 
 [dependencies]
 embedded-hal = "0.2.6"
+
+[dev-dependencies]
+#mockall = {version = "0.11.0", features = ["nightly"]}
+mockall = "0.11.0"
+mockall_derive = "0.11.0"

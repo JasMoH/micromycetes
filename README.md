@@ -12,6 +12,9 @@ maybe submit patch if that's not my fault?
 
 STM's good ol' `const ADDRESS: u8 = 0xC8 >> 1;` convention for 8 bit addresses rears its head again...
 
+# integration with clion
+weird and crap a bit so far...
+
 # helpful projects 'n resources
 ## embedded stuff
 * [bluepill quickstart](https://github.com/TeXitoi/blue-pill-quickstart)
