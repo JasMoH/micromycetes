@@ -1,5 +1,13 @@
 [workspace]
 members = [
-    "playtime",
-    "smokie"
+    "smokie",
+]
+
+#target specific code needs to be in its own workspace
+#so that they can set up compile/link for that target
+
+#there might be other ways to do this?
+exclude = [
+    "bluepill",
+    "esp"
 ]

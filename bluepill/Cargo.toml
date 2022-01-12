@@ -1,5 +1,5 @@
 [package]
-name = "playtime"
+name = "bluepill"
 version = "0.1.0"
 edition = "2018"
 
@@ -18,7 +18,7 @@ panic-semihosting = "0.5.2"
 #shimming in multiple targets in probably the dumb way
 [[bin]]
 name = "bluepill"
-path = "src/bluepill/main.rs"
+path = "src/main.rs"
 
 #[[bin]]
 #name = "nucleo"

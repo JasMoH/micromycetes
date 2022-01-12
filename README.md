@@ -20,10 +20,31 @@ weird and crap a bit so far...
 * [bluepill quickstart](https://github.com/TeXitoi/blue-pill-quickstart)
 * [the embeddonomicon](https://docs.rust-embedded.org/book/intro/index.html)
 * [usage axamples for bluepill hal](https://github.com/stm32-rs/stm32f1xx-hal/tree/v0.7.0/examples)
+* [embedded rust on portability](https://docs.rust-embedded.org/book/portability/)
+
+### setting target info
+there's a handful of config stuff that a lot of embedded micros need that isn't typically present in a std
+crate. this often includes linker/locater scripting / memory layout, debugger configs, crosscompile target info, and others.
+ I've found [this guide from ferrous systems](https://ferrous-systems.com/blog/test-embedded-app/#structuring-the-project-for-host--and-cross-compilation)
+is useful for showing how to structure a multi-target project to keep that all clean and working.
 
 ## rust general
 * [mdbook for documentation](https://rust-lang.github.io/mdBook/)
 * [rust desgin patterns](https://rust-unofficial.github.io/patterns/)
+
+## esp32 stuff
+for xtensa esp32s, you'lle need [the rust xtensa compiler fork](https://github.com/esp-rs/rust-build)
+
+the [esp32-hal](https://github.com/esp-rs/esp32-hal) crate is a good starting point for getting
+peripherals set up, project configuration, etc. it is intende for no-std applications. there is also 
+[a hal based on the esp-idf](https://github.com/esp-rs/esp-idf-hal) which provides std support.
+
+### compiling for esp32
+I'm using the espressif docker container. the compile command is:
+```sh
+./run_env.sh #mounts volumes and such
+cargo +esp build
+```
 
 ## notes on setting up i2c read
 [embedded hal i2c documentation](https://docs.rs/embedded-hal/0.2.6/embedded_hal/blocking/i2c/index.html)
